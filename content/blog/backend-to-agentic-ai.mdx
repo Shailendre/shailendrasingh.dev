@@ -1,0 +1,32 @@
+---
+title: "From Core Backend Engineering to Agentic AI Architecture"
+date: "2026-04-01"
+excerpt: "Key philosophical shifts required when moving from deterministic Java environments to probabilistic multi-agent AI ecosystems."
+tags: ["AI Engineering", "LangGraph", "System Design", "Career"]
+readTime: "7 min read"
+category: "technical"
+---
+
+For nearly a decade, my engineering world was entirely deterministic. Write Java code, construct strict unit tests with Mockito, and ensure input X always yields output Y.
+
+Transitioning into enterprise AI platform enablement introduced a completely different paradigm: **probabilistic execution**.
+
+### The Mindset Shift
+
+In a traditional Spring Boot service, a `NullPointerException` is a bug. In an agentic system, an LLM returning a structurally unexpected response is *normal operating behaviour* — the system must be designed to absorb it.
+
+This reframing is non-trivial. The instinct is to write more validation. The correct response is to design more robust state machines.
+
+### Building Guardrails, Not Logic
+
+When developing agentic platforms using LangGraph and Anthropic Claude APIs, the primary engineering job changes from writing strict logic to designing resilient frameworks:
+
+1. **Tooling Foundations** — strict Pydantic schemas for every tool the agent can invoke. The LLM gets strong type hints; your system gets early rejection of malformed calls.
+2. **Context Engineering** — precise system prompt management to anchor model reasoning within domain boundaries. Drift is the enemy.
+3. **Validation Loops** — deterministic state verification engines around LLM output. The agent reasons; a classical function verifies.
+
+This pattern — LLM for reasoning, deterministic code for verification — delivered an 80% user productivity boost on the automation workflows I built.
+
+### What Backend Experience Actually Transfers
+
+Distributed systems thinking transfers directly: idempotency, retry semantics, circuit breakers, and observability all apply to agent tool calls. The biggest advantage a backend engineer has in agentic AI is the intuition that **every external call is a distributed system call** — treat it accordingly.

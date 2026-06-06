@@ -1,0 +1,37 @@
+---
+title: "Slashing API Latency by 40% with Protobuf Migrations"
+date: "2025-11-04"
+excerpt: "How swapping traditional JSON REST payloads for Protocol Buffers boosted data throughput capacity from 350 to 1000 requests per second."
+tags: ["API Design", "gRPC", "Protobuf", "Performance"]
+readTime: "6 min read"
+category: "technical"
+---
+
+When downloading large structured datasets exceeding 10MB, JSON serialization overhead becomes a primary infrastructure bottleneck. By replacing traditional REST interfaces with gRPC and Protocol Buffers (Protobuf), we optimized payload densities significantly.
+
+### The Impact Metrics
+
+| Metric | Before | After | Delta |
+|---|---|---|---|
+| Throughput | 350 req/s | 1000 req/s | **+185%** |
+| API Latency | baseline | −40% | |
+| Max Payload | ~10 MB hard limit | Paginated, unlimited | |
+
+### Why Binary Wins at Scale
+
+Binary serialization strips away the repetitive text keys inherent in JSON, allowing the network layer to maximize CPU utilization during high-frequency transaction states.
+
+```proto
+message DataRecord {
+  string id = 1;
+  string content = 2;
+  int64 timestamp = 3;
+  repeated string tags = 4;
+}
+```
+
+The migration required defining `.proto` schemas for every API contract and regenerating Java stubs — a two-sprint investment that paid back its cost in the first month of production traffic.
+
+### Pagination as a First-Class Concern
+
+One underrated benefit: the migration forced us to design proper cursor-based pagination. Previously, large dataset endpoints were an implicit footgun. The Protobuf contract made the page token a named field — no way to call the API without thinking about it.

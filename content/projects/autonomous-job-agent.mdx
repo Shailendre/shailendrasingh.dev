@@ -1,0 +1,30 @@
+---
+title: "Autonomous AI Job Application Agent"
+date: "2026-03-15"
+excerpt: "A multi-agent pipeline that scrapes job postings, semantically matches them against a profile, and drafts context-aware application materials autonomously."
+tags: ["Python", "LangGraph", "Vector Search", "LLM Orchestration"]
+stack: ["Python", "LangGraph", "Claude API", "Playwright", "ChromaDB"]
+status: "Shipping"
+statusColor: "green"
+github: "#"
+demo: null
+readTime: "6 min read"
+---
+
+### The Problem
+
+Traditional job hunting requires hours of manual searching, reading through misaligned role descriptions, and rewriting cover letters for each application. This project transforms that friction into a structured data pipeline.
+
+### Architectural Blueprint
+
+**Ingress (Discovery)** — Playwright scripts scrape target career portals and job feeds on a schedule, normalizing raw HTML into structured `JobRecord` objects.
+
+**Processing (Semantic Matcher)** — Text embeddings map job parameters against a core profile stored in ChromaDB. Jobs below a cosine similarity threshold are filtered before any LLM call is made — keeping costs low and signal high.
+
+**Execution (Orchestration Engine)** — A LangGraph ReAct agent interacts with the Anthropic Claude API to dynamically generate context-aware resume highlights and tailored cover letter narratives, grounded in the specific role and company context.
+
+### Key Technical Decisions
+
+- **ChromaDB over Pinecone** — local-first during development, zero egress cost, trivially swappable.
+- **LangGraph over raw tool loops** — stateful checkpointing means a failed API call mid-run resumes from the last successful node rather than restarting the full pipeline.
+- **Structured output schemas** — every Claude response is validated against a Pydantic model before it touches downstream state.

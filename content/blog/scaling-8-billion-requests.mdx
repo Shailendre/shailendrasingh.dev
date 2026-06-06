@@ -1,0 +1,34 @@
+---
+title: "Sustaining 99.999% Uptime Across 8 Billion Monthly Requests"
+date: "2026-01-10"
+excerpt: "An architectural deep-dive into scaling distributed enterprise SaaS platforms using Java, Spring Boot, and AWS-native workflows."
+tags: ["Distributed Systems", "AWS", "Spring Boot", "Scale"]
+readTime: "8 min read"
+category: "technical"
+---
+
+Handling high-frequency enterprise search traffic at scale requires moving away from synchronous bottlenecks. During my tenure engineering core distributed systems, keeping a platform running at >99.999% uptime required a fundamental rethink of cloud resource boundaries.
+
+### Decoupling with AWS Native Workflows
+
+To process billions of requests without saturating our relational database layers, we implemented an asynchronous, decoupled architecture:
+
+- **AWS Kinesis** — high-throughput streaming and fast ingest cycles.
+- **AWS Lambda & DynamoDB** — horizontally scalable compute on demand.
+
+```java
+// Reactive stream ingestion core
+public Mono<Void> processIngestStream(Flux<DataEvent> eventStream) {
+    return eventStream
+        .flatMap(event -> repository.save(event))
+        .then();
+}
+```
+
+This structural shift allowed our throughput capacity to improve by 185% while handling asynchronous batching safely across millions of daily operations.
+
+### Circuit Breakers at the Edge
+
+Every external dependency — third-party enrichment APIs, downstream indexing services — sat behind a Resilience4j circuit breaker. When a downstream service degraded, the system shed load gracefully rather than propagating backpressure across the entire ingest pipeline.
+
+The key insight: **design every inter-service call as if it will fail 1% of the time**. At 8B requests/month, that's 80M potential failure points.
