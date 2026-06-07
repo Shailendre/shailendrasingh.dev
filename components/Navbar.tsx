@@ -61,7 +61,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/shailendrasingh"
+              href="https://github.com/Shailendre"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -70,7 +70,7 @@ export default function Navbar() {
               <Github size={17} />
             </a>
             <a
-              href="https://linkedin.com/in/shailendrasingh"
+              href="https://www.linkedin.com/in/shailendra-singh-ba9533118/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -134,10 +134,10 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="flex items-center gap-4 pt-3">
-                <a href="https://github.com/shailendrasingh" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Shailendre" target="_blank" rel="noopener noreferrer">
                   <Github size={17} className="text-slate-400" />
                 </a>
-                <a href="https://linkedin.com/in/shailendrasingh" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/shailendra-singh-ba9533118/" target="_blank" rel="noopener noreferrer">
                   <Linkedin size={17} className="text-slate-400" />
                 </a>
               </div>
