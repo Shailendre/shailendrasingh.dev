@@ -14,6 +14,16 @@ const projects = [
     github: 'https://github.com/Shailendre/job-agent',
     demo: null,
   },
+  {
+    title: 'shailendrasingh.dev',
+    tagline:
+      'This portfolio — statically prerendered Next.js 14 App Router site with an MDX content layer, Framer Motion animations, and a server/client component split that keeps fs reads strictly server-side. Deployed to Vercel via GitHub push.',
+    stack: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'MDX', 'Vercel'],
+    status: 'Shipping',
+    statusColor: 'green' as const,
+    github: 'https://github.com/Shailendre/shailendrasingh.dev',
+    demo: 'https://shailendrasinghdev.vercel.app',
+  },
 ]
 
 const statusBadge = {

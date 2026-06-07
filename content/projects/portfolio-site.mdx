@@ -1,0 +1,52 @@
+---
+title: "shailendrasingh.dev"
+date: "2026-06-07"
+excerpt: "This portfolio — statically prerendered Next.js 14 App Router site with an MDX content layer, Framer Motion animations, and a server/client component split that keeps fs reads strictly server-side."
+tags: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MDX", "Vercel"]
+stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MDX", "Vercel"]
+status: "Shipping"
+statusColor: "green"
+github: "https://github.com/Shailendre/shailendrasingh.dev"
+demo: "https://shailendrasinghdev.vercel.app"
+readTime: "4 min read"
+---
+
+### Architecture
+
+The site is a fully statically prerendered Next.js 14 App Router application. Every page is built at deploy time — no server runtime, no cold starts, instant global edge delivery via Vercel's CDN.
+
+**Content layer** — Blog posts and project write-ups live as `.mdx` files in `/content/`. At build time, `gray-matter` parses the YAML frontmatter and the resulting metadata is passed as props from the root Server Component (`app/page.tsx`) down to client components. The `lib/mdx.ts` module is guarded with `import 'server-only'` to prevent Node.js `fs` calls from leaking into client bundles.
+
+**Server / Client split** — Static data fetching happens in `app/page.tsx` (Server Component, no `'use client'`). Interactive sections — theme toggle, Framer Motion animations, accordion, writing tab filter — are isolated `'use client'` components that receive pre-fetched data as props. Type definitions live in `lib/types.ts` (no server-only imports) so client components can safely import them without triggering webpack module tracing into server-only code.
+
+**Theming** — `next-themes` defaults to light mode. The Sun/Moon toggle is mounted only after hydration (`mounted` state guard) to prevent a flash of the wrong icon during SSR.
+
+### CI/CD Pipeline
+
+```
+git push → GitHub (main)
+              ↓
+         Vercel detects push via Git integration
+              ↓
+         next build (Washington DC — iad1 region)
+         • npm install (123 packages, ~8s)
+         • TypeScript check
+         • Static page generation
+         • Bundle optimisation (~35s total)
+              ↓
+         Deploy to Vercel Edge Network
+         • Production alias: shailendrasinghdev.vercel.app
+         • Globally distributed CDN
+```
+
+Every `git push` to `main` triggers a full production deploy automatically. Preview deployments are created for all other branches, giving isolated URLs for testing before merging.
+
+### Bundle Profile
+
+| Chunk | Size |
+|---|---|
+| First Load JS (shared) | 87.3 kB |
+| Page (`/`) | 54.9 kB |
+| Total First Load | 142 kB |
+
+`gray-matter` and `fs` run exclusively at build time — zero runtime weight added to the client bundle.
