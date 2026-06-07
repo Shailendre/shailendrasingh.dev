@@ -5,39 +5,13 @@ import { Github, ExternalLink } from 'lucide-react'
 
 const projects = [
   {
-    title: 'DevDash AI',
-    tagline: 'Intelligent developer productivity dashboard with agentic task automation and LLM-powered insights.',
-    stack: ['Python', 'LangGraph', 'FastAPI', 'AWS', 'React'],
+    title: 'Job Agent',
+    tagline:
+      'Autonomous job application agent — reads Gmail job alerts, navigates to each listing with a Claude-powered browser agent, fills the application form, and queues it for human review before submission.',
+    stack: ['Python', 'Claude API', 'Playwright', 'FastAPI', 'Next.js', 'SQLAlchemy', 'Google APIs'],
     status: 'Shipping',
     statusColor: 'green' as const,
-    github: '#',
-    demo: '#',
-  },
-  {
-    title: 'AutoPR Bot',
-    tagline: 'Autonomous PR review agent built on Claude API — contextual code analysis with cross-file reasoning.',
-    stack: ['Claude API', 'TypeScript', 'GitHub Actions', 'Node.js'],
-    status: 'Beta Alpha',
-    statusColor: 'blue' as const,
-    github: '#',
-    demo: null,
-  },
-  {
-    title: 'InfraWatcher',
-    tagline: 'AI-powered infrastructure observability platform with predictive anomaly detection and NL querying.',
-    stack: ['Python', 'Prometheus', 'LangChain', 'Grafana', 'K8s'],
-    status: 'In Ideation',
-    statusColor: 'amber' as const,
-    github: '#',
-    demo: null,
-  },
-  {
-    title: 'DataSync Pro',
-    tagline: 'High-throughput real-time data synchronisation engine with deterministic conflict resolution at scale.',
-    stack: ['Java', 'Kafka', 'PostgreSQL', 'Redis', 'AWS'],
-    status: 'In Development',
-    statusColor: 'violet' as const,
-    github: '#',
+    github: 'https://github.com/Shailendre/job-agent',
     demo: null,
   },
 ]
@@ -78,7 +52,7 @@ export default function SideProjects() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className={`grid gap-5 ${projects.length === 1 ? 'grid-cols-1 max-w-2xl' : 'grid-cols-1 md:grid-cols-2'}`}>
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
