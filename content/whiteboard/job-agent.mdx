@@ -1,0 +1,30 @@
+---
+rfc: "RFC-005"
+title: "Autonomous Job Application Agent"
+brief: "Reads Gmail job alerts, navigates to each listing with a Claude-powered browser agent, fills the application form end-to-end, and queues it for human review before submission."
+description: "Agentic pipeline that automates end-to-end job applications using Claude API and Playwright."
+what:
+  - "End-to-end agentic pipeline that monitors Gmail for job alert emails and applies to listings without manual steps"
+  - "Claude-powered Playwright browser agent that navigates job boards, reads form structure, and fills it using your stored profile"
+  - "Human-in-the-loop review dashboard (Next.js) where staged applications wait for your approval before anything is submitted"
+  - "Adaptive form-filling logic that handles Greenhouse, Lever, Workday, and custom portals with different DOM conventions"
+why:
+  - "Job hunting at scale is a loop of repetitive, zero-judgment work — open email, open tab, copy-paste CV, click submit"
+  - "A senior engineer spending 2 hours daily on application admin is a massive misallocation of cognitive effort"
+  - "The hard part (deciding which roles to pursue, tailoring your pitch) can't be automated — but everything around it can"
+  - "No existing tool goes fully end-to-end; most stop at 'autofill' and still require you to babysit every form"
+how:
+  - "Gmail API monitors a labeled inbox folder for job alert digests from LinkedIn, Glassdoor, and Indeed"
+  - "LLM pass extracts listing URLs and scores each role against your target criteria before handing off to the browser agent"
+  - "Claude API with tool-use drives Playwright — it identifies form fields, maps them to your profile, and fills them contextually"
+  - "SQLAlchemy models track application state (drafted → submitted → rejected → interview) in a lightweight Postgres DB"
+  - "FastAPI backend exposes endpoints for the review dashboard; Next.js frontend shows staged applications with approve/reject controls"
+sector: "Agentic Automation"
+date: "2025-06"
+status: "In Progress"
+statusColor: "blue"
+stack: ["Python", "Claude API", "Playwright", "FastAPI", "Next.js", "SQLAlchemy", "Google APIs"]
+github: "https://github.com/Shailendre/job-agent"
+images: []
+videos: []
+---

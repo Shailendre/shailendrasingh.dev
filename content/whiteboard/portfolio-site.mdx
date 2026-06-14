@@ -1,0 +1,32 @@
+---
+rfc: ""
+title: "shailendrasingh.dev"
+brief: "This portfolio — statically prerendered Next.js 14 App Router site with an MDX content layer, Framer Motion animations, and a server/client component split that keeps fs reads strictly server-side."
+description: "Personal portfolio built to demonstrate engineering principles in a real production product."
+what:
+  - "Personal portfolio site built to show how I think about engineering, not just what I've built"
+  - "MDX content layer for blog posts, projects, and whiteboard ideas — all parsed at build time, no CMS required"
+  - "Strict server/client component split: all filesystem reads stay server-side, zero fs logic shipped to the browser"
+  - "Whiteboard section for ideas in flight — a live engineering notebook alongside finished work"
+  - "Dark/light theme with system preference detection and zero hydration flash on load"
+why:
+  - "Most developer portfolios are either over-designed Dribbble pieces or bare GitHub profile pages — neither shows how you actually think"
+  - "Wanted a site where the code architecture is part of the portfolio: clean boundaries, deliberate tradeoffs, no magic"
+  - "Static prerendering means instant load times and zero runtime infrastructure cost — a conscious choice over a headless CMS"
+  - "The whiteboard section exists because shipping isn't the only signal worth showing — the ideas in progress matter too"
+how:
+  - "Next.js 14 App Router with generateStaticParams for static prerendering of every route at build time"
+  - "gray-matter parses MDX frontmatter at build time; content files live in the repo alongside the code"
+  - "next-themes handles the dark/light toggle with localStorage persistence and suppressed hydration mismatch"
+  - "Framer Motion powers scroll-triggered reveals and hover animations, isolated behind a client component boundary"
+  - "Inter and Fira Code loaded via next/font with CSS variable injection — no layout shift, no FOUT"
+  - "Deployed to Vercel via GitHub push with automatic preview deployments on every branch"
+sector: "Portfolio"
+date: "2025-06"
+status: "Done"
+statusColor: "green"
+stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "MDX", "Vercel"]
+github: "https://github.com/Shailendre/shailendrasingh.dev"
+images: []
+videos: []
+---

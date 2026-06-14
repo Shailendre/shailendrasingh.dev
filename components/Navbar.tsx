@@ -9,7 +9,6 @@ import Link from 'next/link'
 const navLinks = [
   { label: 'Work', href: '#work' },
   { label: 'Projects', href: '#projects' },
-  { label: 'The Huddle', href: '#huddle' },
   { label: 'Writing', href: '#writing' },
 ]
 

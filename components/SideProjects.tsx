@@ -5,16 +5,6 @@ import { Github, ExternalLink } from 'lucide-react'
 
 const projects = [
   {
-    title: 'Job Agent',
-    tagline:
-      'Autonomous job application agent — reads Gmail job alerts, navigates to each listing with a Claude-powered browser agent, fills the application form, and queues it for human review before submission.',
-    stack: ['Python', 'Claude API', 'Playwright', 'FastAPI', 'Next.js', 'SQLAlchemy', 'Google APIs'],
-    status: 'Shipping',
-    statusColor: 'green' as const,
-    github: 'https://github.com/Shailendre/job-agent',
-    demo: null,
-  },
-  {
     title: 'shailendrasingh.dev',
     tagline:
       'This portfolio — statically prerendered Next.js 14 App Router site with an MDX content layer, Framer Motion animations, and a server/client component split that keeps fs reads strictly server-side. Deployed to Vercel via GitHub push.',

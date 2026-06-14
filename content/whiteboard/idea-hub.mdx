@@ -1,0 +1,33 @@
+---
+rfc: "RFC-006"
+title: "IdeaHub — Exclusive Idea Pitching Platform"
+brief: "A closed-community social platform where members pitch ideas, upvote, comment, request collaborative huddle rooms, and co-fund promising concepts — backed by semantic search that surfaces similar pitches before you duplicate one."
+description: "Exclusive social platform for pitching startup ideas with semantic deduplication and community feedback."
+what:
+  - "Invite-only social platform where members pitch startup ideas and get honest feedback from a curated community"
+  - "Each pitch supports a title, description, optional video or deck embed, and tags — plus upvotes, comments, and huddle rooms"
+  - "Semantic deduplication layer that flags similar existing pitches before you submit, preventing the feed from filling with near-duplicates"
+  - "Fund modal lets members signal financial interest in a concept; huddle rooms let matched collaborators spin up focused async threads"
+  - "Role-based system: member, moderator, and admin — plus a playground mode for testing the full moderation flow"
+why:
+  - "The best early-stage ideas die from lack of the right audience at the right moment, not lack of effort or intelligence"
+  - "Twitter and LinkedIn reward polished announcements, not raw half-baked concepts that genuinely need critique"
+  - "Most feedback platforms (Product Hunt, Reddit) are public and loud — they incentivise marketing over honest early-stage feedback"
+  - "Invite-only format creates a trusted environment where people share genuinely unfinished ideas without fear of being copied or dismissed"
+  - "The semantic similarity layer solves a real problem: duplicate ideas fragment feedback instead of consolidating it around the strongest version"
+how:
+  - "Supabase handles auth, Postgres data storage, Row-Level Security policies, and Edge Functions for background embedding generation"
+  - "pgvector stores embeddings for each pitch; a 72% cosine similarity threshold triggers duplicate detection on every new submission"
+  - "Hybrid search combines full-text search (FTS) for keyword queries with semantic vector search for conceptual matches"
+  - "Next.js 16 App Router with React 19, Tailwind CSS v4, shadcn/ui components, and Framer Motion for feed animations"
+  - "Huddle requests are lightweight — any member can request a focused thread on a pitch; creator accepts and the room opens"
+  - "Moderation is role-scoped: moderators can hide pitches; admins can remove content and manage member access"
+sector: "Social / Community Platform"
+date: "2025-05"
+status: "Playground"
+statusColor: "violet"
+stack: ["Next.js 16", "React 19", "Supabase", "PostgreSQL", "pgvector", "Edge Functions", "Tailwind CSS v4", "shadcn/ui", "Framer Motion"]
+github: ""
+images: []
+videos: []
+---

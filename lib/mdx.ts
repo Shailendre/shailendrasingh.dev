@@ -2,9 +2,9 @@ import 'server-only'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import type { PostMeta, ProjectMeta } from './types'
+import type { PostMeta, ProjectMeta, WhiteboardIdeaMeta } from './types'
 
-export type { PostMeta, ProjectMeta }
+export type { PostMeta, ProjectMeta, WhiteboardIdeaMeta }
 
 const contentDir = path.join(process.cwd(), 'content')
 
@@ -55,4 +55,29 @@ export function getAllProjects(): ProjectMeta[] {
     github: d.github ? String(d.github) : undefined,
     demo: d.demo ? String(d.demo) : undefined,
   }))
+}
+
+export function getAllWhiteboardIdeas(): WhiteboardIdeaMeta[] {
+  return readDir<WhiteboardIdeaMeta>('whiteboard', (slug, d) => ({
+    slug,
+    rfc: String(d.rfc ?? ''),
+    title: String(d.title ?? ''),
+    brief: String(d.brief ?? ''),
+    description: String(d.description ?? ''),
+    what: Array.isArray(d.what) ? (d.what as string[]) : [],
+    why: Array.isArray(d.why) ? (d.why as string[]) : [],
+    how: Array.isArray(d.how) ? (d.how as string[]) : [],
+    sector: String(d.sector ?? ''),
+    date: normalizeDate(d.date),
+    status: String(d.status ?? 'Whiteboarding'),
+    statusColor: (d.statusColor as WhiteboardIdeaMeta['statusColor']) ?? 'amber',
+    stack: Array.isArray(d.stack) ? (d.stack as string[]) : [],
+    github: d.github ? String(d.github) : undefined,
+    images: Array.isArray(d.images) ? (d.images as string[]) : [],
+    videos: Array.isArray(d.videos) ? (d.videos as string[]) : [],
+  })).sort((a, b) => a.rfc.localeCompare(b.rfc))
+}
+
+export function getWhiteboardIdea(slug: string): WhiteboardIdeaMeta | null {
+  return getAllWhiteboardIdeas().find((i) => i.slug === slug) ?? null
 }

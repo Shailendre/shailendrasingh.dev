@@ -1,16 +1,29 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { PenLine } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import type { WhiteboardIdeaMeta } from '@/lib/types'
 
-const ghostRows = [
-  { rfc: 'RFC-001', title: 'AI-Powered Code Review Platform', sector: 'SaaS Tooling', date: 'Jun 2025' },
-  { rfc: 'RFC-002', title: 'Agentic DevOps Pipeline Orchestrator', sector: 'DevOps Automation', date: 'May 2025' },
-  { rfc: 'RFC-003', title: 'B2B AI Knowledge Fabric', sector: 'B2B AI Platforms', date: 'Apr 2025' },
-  { rfc: 'RFC-004', title: 'Distributed Observability Co-Pilot', sector: 'DevOps Automation', date: 'Mar 2025' },
-]
+const statusBadge: Record<string, string> = {
+  amber: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400',
+  green: 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400',
+  blue: 'bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-400',
+  violet: 'bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400',
+}
 
-export default function HuddleRoom() {
+const statusDot: Record<string, string> = {
+  amber: 'bg-amber-500',
+  green: 'bg-emerald-500',
+  blue: 'bg-sky-500',
+  violet: 'bg-violet-500',
+}
+
+interface Props {
+  ideas: WhiteboardIdeaMeta[]
+}
+
+export default function HuddleRoom({ ideas }: Props) {
   return (
     <section id="huddle" className="py-24 px-6 bg-slate-50 dark:bg-[#0f0f0f]">
       <div className="max-w-6xl mx-auto">
@@ -25,88 +38,83 @@ export default function HuddleRoom() {
             Open Ideas
           </span>
           <h2 className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
-            The Huddle Area
+            The Whiteboard
           </h2>
           <p className="mt-3 text-slate-500 dark:text-slate-400 text-sm max-w-2xl leading-relaxed">
-            Startup concepts &amp; architecture drafts — blueprints, open-source ideas,
-            and startup theories I&apos;m actively whiteboarding.
+            Startup concepts &amp; architecture drafts — blueprints, open-source ideas, and B2B SaaS theories
+            I&apos;m actively whiteboarding. Click any card to dive in, leave a comment, or upvote.
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-white dark:bg-[#111111]"
-          style={{ minHeight: 240 }}
-        >
-          {/* Ghost rows — blurred, aria-hidden */}
-          <div
-            className="opacity-25 blur-[3px] select-none pointer-events-none"
-            aria-hidden="true"
-          >
-            {/* Column header strip */}
-            <div className="hidden sm:grid grid-cols-12 gap-3 px-4 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-[#0f0f0f]">
-              {['RFC', 'Title', 'Sector', 'Date', ''].map((h) => (
-                <div
-                  key={h}
-                  className={`font-mono text-[10px] text-slate-400 dark:text-slate-600 uppercase tracking-widest ${
-                    h === 'RFC' ? 'col-span-1' : h === 'Title' ? 'col-span-5' : h === 'Sector' ? 'col-span-3' : h === 'Date' ? 'col-span-2' : 'col-span-1'
-                  }`}
-                >
-                  {h}
-                </div>
-              ))}
-            </div>
-            {ghostRows.map((row, i) => (
-              <div
-                key={row.rfc}
-                className={`px-4 py-4 grid grid-cols-12 gap-3 items-center ${
-                  i > 0 ? 'border-t border-slate-100 dark:border-slate-800' : ''
-                }`}
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+          {ideas.map((idea, i) => (
+            <motion.div
+              key={idea.slug}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+              whileHover={{ y: -4, transition: { duration: 0.2, ease: 'easeOut' } }}
+            >
+              <Link
+                href={`/whiteboard/${idea.slug}`}
+                className="group flex flex-col h-full p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111111] hover:shadow-lg dark:hover:shadow-black/40 hover:border-slate-300 dark:hover:border-slate-700 transition-all"
               >
-                <div className="col-span-2 sm:col-span-1 font-mono text-xs text-slate-400 dark:text-slate-500">
-                  {row.rfc}
-                </div>
-                <div className="col-span-8 sm:col-span-5 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  {row.title}
-                </div>
-                <div className="hidden sm:flex sm:col-span-3">
-                  <span className="text-xs font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
-                    {row.sector}
+                {/* Top row */}
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[11px] text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                      {idea.rfc}
+                    </span>
+                    <span className="text-slate-300 dark:text-slate-700">·</span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 font-mono">
+                      {idea.sector}
+                    </span>
+                  </div>
+                  <span
+                    className={`shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium ${statusBadge[idea.statusColor]}`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${statusDot[idea.statusColor]}`} />
+                    {idea.status}
                   </span>
                 </div>
-                <div className="hidden sm:block sm:col-span-2 font-mono text-xs text-slate-400">
-                  {row.date}
-                </div>
-                <div className="col-span-2 sm:col-span-1 flex justify-end">
-                  <div className="w-3 h-3 rounded-sm border border-slate-300 dark:border-slate-600" />
-                </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Frosted overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-white/75 dark:bg-[#111111]/80 backdrop-blur-[3px]">
-            <div className="text-center px-8 max-w-sm">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mb-5">
-                <PenLine size={20} className="text-slate-500 dark:text-slate-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                Architecture Drafts in Progress
-              </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                Whiteboarding new B2B SaaS frameworks, agentic automation blueprints,
-                and interactive technical RFCs. Check back soon.
-              </p>
-              <div className="mt-5 inline-flex items-center gap-2 text-xs font-mono text-slate-400 dark:text-slate-500">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                Sandbox Hub — Maintenance Mode
-              </div>
-            </div>
-          </div>
-        </motion.div>
+                {/* Title */}
+                <h3 className="text-base font-semibold text-slate-900 dark:text-white leading-snug mb-2 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                  {idea.title}
+                </h3>
+
+                {/* Brief */}
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">
+                  {idea.brief}
+                </p>
+
+                {/* Stack chips */}
+                <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
+                  {idea.stack.slice(0, 5).map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-0.5 text-xs font-mono rounded-md border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#1a1a1a]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {idea.stack.length > 5 && (
+                    <span className="px-2 py-0.5 text-xs font-mono rounded-md border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-[#1a1a1a]">
+                      +{idea.stack.length - 5}
+                    </span>
+                  )}
+                </div>
+
+                {/* CTA */}
+                <div className="flex items-center gap-1.5 pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                  Open whiteboard
+                  <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
